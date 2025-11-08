@@ -80,7 +80,7 @@ struct ContentView: View {
                         
    
                         ZStack {
-                            Image("AboutBackground")
+                            Image("Background8")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
@@ -94,8 +94,8 @@ struct ContentView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 11)
-                                .padding(.bottom, 70)
-                                .opacity(0.8)
+                                .padding(.bottom, 25)
+                                .opacity(0)
                             
 
                            
@@ -195,10 +195,8 @@ struct ContentView: View {
                                 // Button 1 action
                             }) {
                                 VStack {
-                                    Image(systemName: "house.fill")
-                                        .font(.system(size: 24))
-                                    Text("Home")
-                                        .font(.dmSansRegular(size: 12))
+                                    Text("<")
+                                        .font(.dmMonoRegular(size: 24))
                                 }
                                 .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 .frame(maxWidth: .infinity)
@@ -208,10 +206,8 @@ struct ContentView: View {
                                 // Button 2 action
                             }) {
                                 VStack {
-                                    Image(systemName: "leaf.fill")
-                                        .font(.system(size: 24))
-                                    Text("Plants")
-                                        .font(.dmSansRegular(size: 12))
+                                    Text("+")
+                                        .font(.dmMonoRegular(size: 20))
                                 }
                                 .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 .frame(maxWidth: .infinity)
@@ -221,10 +217,8 @@ struct ContentView: View {
                                 // Button 3 action
                             }) {
                                 VStack {
-                                    Image(systemName: "person.fill")
-                                        .font(.system(size: 24))
-                                    Text("Profile")
-                                        .font(.dmSansRegular(size: 12))
+                                    Text(">")
+                                        .font(.dmMonoRegular(size: 24))
                                 }
                                 .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 .frame(maxWidth: .infinity)
