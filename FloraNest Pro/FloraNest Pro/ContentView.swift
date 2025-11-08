@@ -34,6 +34,12 @@ extension Font {
     static func dmSansMedium(size: CGFloat) -> Font {
         .custom("DM Sans Medium", size: size)
     }
+    static func dmSansBold(size: CGFloat) -> Font {
+        .custom("DM Sans Bold", size: size)
+    }
+    static func dmSansExtraBold(size: CGFloat) -> Font {
+        .custom("DM Sans ExtraBold", size: size)
+    }
     static func dmMonoRegular(size: CGFloat) -> Font {
         .custom("DM Mono", size: size)
     }
@@ -51,7 +57,7 @@ struct ContentView: View {
             ZStack() {
                 VStack(spacing: 0) {
 
-                    VStack(spacing: 0) {
+                    VStack(spacing: 10) {
   
                         HStack(alignment: .center, spacing: 15) {
                             Image("newLogo")
@@ -68,8 +74,8 @@ struct ContentView: View {
                             
                             Spacer()
                         }
-                        .padding(.top, 20)
-                        .padding(.bottom, 20)
+                        .padding(.top, 45)
+                        .padding(.bottom, 5)
                         .padding(.horizontal, 24)
                         
    
@@ -78,7 +84,7 @@ struct ContentView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
-                                .frame(height: 300)
+                                .frame(height: 220)
                                 .clipped()
                                 .cornerRadius(50, corners: [.topLeft, .topRight])
                                 .opacity(0.8)
@@ -101,21 +107,24 @@ struct ContentView: View {
                         Spacer().frame(height: 24)
 
                         VStack {
-                            HStack(alignment: .center, spacing: 10) {
+                            HStack(alignment: .top, spacing: 10) {
                                 Image("leaficon")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 28)
+                                    .frame(height: 40)
                                 Text("Scan plants")
-                                    .font(.dmSansRegular(size: 25))
+                                    .font(.dmSansExtraBold(size: 20))
+                                    .foregroundColor(.black)
+                                    .padding(.top, 8)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 20)
                             Text("Scan or upload plants from your camera roll for plant detetection, health infomation and plant care.")
                                 .font(.dmMonoRegular(size: 15))
+                                .padding(.top, -6)
                                 .foregroundColor(.black)
                                 .opacity(0.6)
-                                .padding(.top, 8)
+                                .padding(.top, 2)
                                 .padding(.horizontal, 20)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -126,21 +135,23 @@ struct ContentView: View {
                         
                         // Section 2
                         VStack {
-                            HStack(alignment: .center, spacing: 10) {
+                            HStack(alignment: .top, spacing: 10) {
                                 Image("plant3")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 30)
+                                    .frame(height: 40)
                                 Text("Plant Collection")
-                                    .font(.dmSansRegular(size: 25))
+                                    .font(.dmSansExtraBold(size: 20))
+                                    .foregroundColor(.black)
+                                    .padding(.top, 8)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 15)
                             Text("Build and expand your plant collection in your plant garden. ")
                                 .font(.dmMonoRegular(size: 15))
                                 .foregroundColor(.black)
                                 .opacity(0.6)
-                                .padding(.top, 8)
+                                .padding(.top, -6)
                                 .padding(.horizontal, 20)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -152,13 +163,15 @@ struct ContentView: View {
                         
                         // Section 3
                         VStack {
-                            HStack(alignment: .center, spacing: 10) {
+                            HStack(alignment: .top, spacing: 10) {
                                 Image("Plant_Triangle")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 28)
+                                    .frame(height: 40)
                                 Text("Plant Of the Day")
-                                    .font(.dmSansRegular(size: 25))
+                                    .font(.dmSansExtraBold(size: 20))
+                                    .foregroundColor(.black)
+                                    .padding(.top, 8)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 20)
@@ -166,7 +179,7 @@ struct ContentView: View {
                                 .font(.dmMonoRegular(size: 15))
                                 .foregroundColor(.black)
                                 .opacity(0.6)
-                                .padding(.top, 8)
+                                .padding(.top, -6)
                                 .padding(.horizontal, 20)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .fixedSize(horizontal: false, vertical: true)

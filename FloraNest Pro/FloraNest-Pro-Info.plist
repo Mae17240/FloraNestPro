@@ -4,11 +4,13 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>DMsansBold.ttf</string>
 		<string>MonoLight.ttf</string>
 		<string>SansLight.ttf</string>
 		<string>SansRegular.ttf</string>
 		<string>MonoRegular.ttf</string>
 		<string>SansThin.ttf</string>
+		<string>DMSansExtraBold.ttf</string>
 	</array>
 </dict>
 </plist>
