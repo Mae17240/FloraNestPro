@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 // Helper to convert hex string to Color
 extension Color {
@@ -50,6 +51,7 @@ extension Font {
 
 struct ContentView: View {
     @State private var hexColor: String = "#0A1D12"
+
     var body: some View {
         ZStack {
             (Color(hex: hexColor) ?? Color.green)
@@ -80,14 +82,14 @@ struct ContentView: View {
                         
    
                         ZStack {
-                            Image("Background8")
+                            Image("Background5")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 220)
                                 .clipped()
                                 .cornerRadius(50, corners: [.topLeft, .topRight])
-                                .opacity(0.8)
+                                .opacity(0.9)
                             
 
                             Image("LearnAboutFloraNest")
@@ -108,21 +110,31 @@ struct ContentView: View {
 
                         VStack {
                             HStack(alignment: .top, spacing: 10) {
-                                Image("leaficon")
+                                Image("plant2")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 40)
+                                    .frame(height: 30)
                                 Text("Scan plants")
-                                    .font(.dmSansExtraBold(size: 20))
-                                    .foregroundColor(.black)
+                                    .font(.dmSansExtraBold(size: 18))
+                                    .foregroundColor(.white)
                                     .padding(.top, 8)
+                                Spacer()
+                                HStack(spacing: 8) {
+                                    Text(DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date()) - 1])
+                                        .font(.dmSansExtraBold(size: 18))
+                                        .foregroundColor(.white)
+                                        .padding(.top, 8)
+                                        .padding(.horizontal, 15)
+                                }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 20)
+                            
+                            
                             Text("Scan or upload plants from your camera roll for plant detetection, health infomation and plant care.")
                                 .font(.dmMonoRegular(size: 15))
                                 .padding(.top, -6)
-                                .foregroundColor(.black)
+                                .foregroundColor(.white)
                                 .opacity(0.6)
                                 .padding(.top, 2)
                                 .padding(.horizontal, 20)
@@ -136,20 +148,23 @@ struct ContentView: View {
                         // Section 2
                         VStack {
                             HStack(alignment: .top, spacing: 10) {
-                                Image("plant3")
+                                Image("Plant10")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 40)
+                                    .frame(height: 25)
+                                    .padding(.top, 5)
+                                
                                 Text("Plant Collection")
-                                    .font(.dmSansExtraBold(size: 20))
-                                    .foregroundColor(.black)
+                                    .font(.dmSansExtraBold(size: 18))
+                                    .foregroundColor(.white)
                                     .padding(.top, 8)
+                                    .padding(.leading, 7)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 15)
+                            .padding(.horizontal, 17)
                             Text("Build and expand your plant collection in your plant garden. ")
                                 .font(.dmMonoRegular(size: 15))
-                                .foregroundColor(.black)
+                                .foregroundColor(.white)
                                 .opacity(0.6)
                                 .padding(.top, -6)
                                 .padding(.horizontal, 20)
@@ -164,20 +179,21 @@ struct ContentView: View {
                         // Section 3
                         VStack {
                             HStack(alignment: .top, spacing: 10) {
-                                Image("Plant_Triangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 40)
+                                Text("+")
+                                    .font(.dmSansRegular(size: 25))
+                                    .foregroundColor(.white)
+                                    .padding(.top, 3)
+                                    
                                 Text("Plant Of the Day")
-                                    .font(.dmSansExtraBold(size: 20))
-                                    .foregroundColor(.black)
+                                    .font(.dmSansExtraBold(size: 18))
+                                    .foregroundColor(.white)
                                     .padding(.top, 8)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 20)
                             Text("Pinus balfouriana, the foxtail pine, is a rare high-elevation pine that is endemic to California, United States. ")
                                 .font(.dmMonoRegular(size: 15))
-                                .foregroundColor(.black)
+                                .foregroundColor(.white)
                                 .opacity(0.6)
                                 .padding(.top, -6)
                                 .padding(.horizontal, 20)
@@ -197,6 +213,7 @@ struct ContentView: View {
                                 VStack {
                                     Text("<")
                                         .font(.dmMonoRegular(size: 24))
+                                        .foregroundColor(Color.white)
                                 }
                                 .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 .frame(maxWidth: .infinity)
@@ -205,13 +222,16 @@ struct ContentView: View {
                             Button(action: {
                                 // Button 2 action
                             }) {
-                                VStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color(hex: hexColor) ?? Color.green)
+                                        .frame(width: 80, height: 36)
                                     Text("+")
-                                        .font(.dmMonoRegular(size: 20))
+                                        .font(.dmMonoRegular(size: 24))
+                                        .foregroundColor(.white)
                                 }
-                                .foregroundColor(Color(hex: hexColor) ?? Color.green)
-                                .frame(maxWidth: .infinity)
                             }
+                            .frame(maxWidth: .infinity)
                             
                             Button(action: {
                                 // Button 3 action
@@ -219,6 +239,7 @@ struct ContentView: View {
                                 VStack {
                                     Text(">")
                                         .font(.dmMonoRegular(size: 24))
+                                        .foregroundColor(Color.white)
                                 }
                                 .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 .frame(maxWidth: .infinity)
@@ -226,9 +247,10 @@ struct ContentView: View {
                         }
                         .padding(.horizontal, 40)
                         .padding(.vertical, 20)
-                        .background(Color.white)
+                        .background(Color.clear)
+                        .cornerRadius(20, corners: [.topRight, .topLeft])
                     }
-                    .background(Color.white)
+                    .background(Color(hex: hexColor) ?? Color.green)
                     .cornerRadius(50, corners: [.bottomLeft, .bottomRight, .topRight, .topLeft])
                     .edgesIgnoringSafeArea(.bottom)
                     .padding(.top, -70)
