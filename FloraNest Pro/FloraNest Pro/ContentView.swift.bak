@@ -53,25 +53,11 @@ struct ContentView: View {
     @State private var hexColor: String = "#0A1D12"
     // @State private var isLoading: Bool = true
     @State private var showYourPlants = false
-    @State private var isDarkMode: Bool = true
-    
-    // Computed properties for dynamic colors
-    var backgroundColor: Color {
-        isDarkMode ? (Color(hex: hexColor) ?? Color.green) : Color.white
-    }
-    
-    var textColor: Color {
-        isDarkMode ? .white : .black
-    }
-    
-    var boxColor: Color {
-        isDarkMode ? (Color(hex: hexColor) ?? Color.green) : .white
-    }
 
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundColor
+                (Color(hex: hexColor) ?? Color.green)
                     .ignoresSafeArea()
                 // Group {
                 //     if isLoading {
@@ -90,6 +76,29 @@ struct ContentView: View {
 
                                 VStack(spacing: 10) {
 
+                                    HStack(alignment: .center, spacing: 15) {
+                                        Image("newLogo")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 30)
+                                            .foregroundColor(.white)
+
+                                        Image("Floranest")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 19)
+                                            .foregroundColor(.white)
+
+                                        Spacer()
+                                        Text("")
+                                            .foregroundColor(.white)
+                                            .font(.dmSansMedium(size: 15))
+                                    }
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 10)
+                                    .padding(.horizontal, 24)
+
+
                                     ZStack {
                                         Image("Background12")
                                             .resizable()
@@ -99,7 +108,6 @@ struct ContentView: View {
                                             .clipped()
                                             .cornerRadius(50, corners: [.topLeft, .topRight])
                                             .opacity(0.9)
-                                            .padding(.top, 59)
 
 
                                         Image("LearnAboutFloraNest")
@@ -128,7 +136,7 @@ struct ContentView: View {
                                             
                                             Text("Scan plants")
                                                 .font(.dmSansExtraBold(size: 18))
-                                                .foregroundColor(textColor)
+                                                .foregroundColor(.white)
                                                 .padding(.top, 8)
                                             
                                             
@@ -140,7 +148,7 @@ struct ContentView: View {
                                         Text("Scan or upload plants from your camera roll for plant detetection, health infomation and plant care.")
                                             .font(.dmMonoRegular(size: 15))
                                             .padding(.top, -6)
-                                            .foregroundColor(textColor)
+                                            .foregroundColor(.white)
                                             .opacity(0.9)
                                             .padding(.top, 5)
                                             .padding(.horizontal, 20)
@@ -157,18 +165,18 @@ struct ContentView: View {
                                         HStack(alignment: .top, spacing: 10) {
                                             Text("+")
                                                 .font(.dmMonoRegular(size: 24))
-                                                .foregroundColor(textColor)
+                                                .foregroundColor(.white)
 
                                             Text("Plant Collection")
                                                 .font(.dmSansExtraBold(size: 18))
-                                                .foregroundColor(textColor)
+                                                .foregroundColor(.white)
                                                 .padding(.top, 3)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 17)
                                         Text("Build and expand your plant collection in your plant garden. ")
                                             .font(.dmMonoRegular(size: 15))
-                                            .foregroundColor(textColor)
+                                            .foregroundColor(.white)
                                             .opacity(0.8)
                                             .padding(.top, -6)
                                             .padding(.horizontal, 20)
@@ -184,19 +192,19 @@ struct ContentView: View {
                                         HStack(alignment: .top, spacing: 10) {
                                             Text("+")
                                                 .font(.dmSansRegular(size: 25))
-                                                .foregroundColor(textColor)
+                                                .foregroundColor(.white)
                                                 .padding(.top, 3)
 
                                             Text("Plant Of the Day")
                                                 .font(.dmSansExtraBold(size: 18))
-                                                .foregroundColor(textColor)
+                                                .foregroundColor(.white)
                                                 .padding(.top, 8)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 20)
                                         Text("Pinus balfouriana, the foxtail pine, is a rare high-elevation pine that is endemic to California, United States. ")
                                             .font(.dmMonoRegular(size: 15))
-                                            .foregroundColor(textColor)
+                                            .foregroundColor(.white)
                                             .opacity(0.8)
                                             .padding(.top, -6)
                                             .padding(.horizontal, 20)
@@ -215,11 +223,11 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 Circle()
-                                                    .fill(isDarkMode ? Color.white.opacity(0.2) : Color.black.opacity(0.1))
+                                                    .fill(Color.white.opacity(0.2))
                                                     .frame(width: 40, height: 40)
                                                 Image(systemName: "chevron.left")
                                                     .font(.system(size: 14, weight: .semibold))
-                                                    .foregroundColor(textColor)
+                                                    .foregroundColor(.white)
                                             }
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.leading, 8)
@@ -230,12 +238,12 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 16)
-                                                    .fill(isDarkMode ? Color.white.opacity(0.7) : Color.black.opacity(0.1))
+                                                    .fill(Color.white.opacity(0.7))
                                                     .frame(width: 90, height: 35)
                                                 
                                                 Text("+")
                                                     .font(.dmMonoRegular(size: 24))
-                                                    .foregroundColor(isDarkMode ? .black : textColor)
+                                                    .foregroundColor(.black)
                                                     
                                             }
                                         }
@@ -246,11 +254,11 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 Circle()
-                                                    .fill(isDarkMode ? Color.white.opacity(0.1) : Color.black.opacity(0.1))
+                                                    .fill(Color.white.opacity(0.1))
                                                     .frame(width: 40, height: 40)
                                                 Image(systemName: "chevron.right")
                                                     .font(.system(size: 14, weight: .semibold))
-                                                    .foregroundColor(textColor)
+                                                    .foregroundColor(.white)
                                             }
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                             .padding(.trailing, 8)
@@ -261,52 +269,12 @@ struct ContentView: View {
                                     .background(Color.clear)
                                     .cornerRadius(20, corners: [.topRight, .topLeft])
                                 }
-                                .background(boxColor)
+                                .background(Color(hex: hexColor) ?? Color.green)
                                 .cornerRadius(50, corners: [.bottomLeft, .bottomRight, .topRight, .topLeft])
                                 .edgesIgnoringSafeArea(.bottom)
                                 .padding(.top, -70)
                                 .padding(.top, 24)
                             }
-                            
-                            // Header overlay - always on top
-                            VStack {
-                                HStack(alignment: .center, spacing: 15) {
-                                    Image("newLogo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 30)
-                                        .foregroundColor(textColor)
-
-                                    Image("Floranest")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 19)
-                                        .foregroundColor(textColor)
-
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        print("Button tapped! isDarkMode: \(isDarkMode)")
-                                        withAnimation {
-                                            isDarkMode.toggle()
-                                        }
-                                    }) {
-                                        Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
-                                            .foregroundColor(textColor)
-                                            .font(.system(size: 24))
-                                            .frame(width: 44, height: 44)
-                                            .contentShape(Rectangle())
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                                .padding(.top, 10)
-                                .padding(.bottom, 10)
-                                .padding(.horizontal, 24)
-                                .background(Color.clear)
-                                
-                                Spacer()
-                            }
-                            .zIndex(1000)
                         }
                         // .transition(.opacity)
                         // .opacity(isLoading ? 0 : 1)
