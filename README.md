@@ -1,4 +1,4 @@
-# FloraNest Pro 
+# FloraNest Pro - Undergoing development !
 ### A minimalistic Plant Scanning IOS application. <br>
 
 - Floranest is a plant application designed to comply with daily life tasks allowing users to scan or upload images of indoor and outdoor plants to recieve detection data, health and care plans for the plants.
