@@ -50,22 +50,28 @@ extension Font {
 }
 
 struct ContentView: View {
-    @State private var hexColor: String = "#0A1D12"
+    @State private var hexColor: String = "#182212"
     // @State private var isLoading: Bool = true
     @State private var showYourPlants = false
-    @State private var isDarkMode: Bool = true
+    @State private var isDarkMode: Bool? = nil // nil = auto (follow system), true = dark, false = light
+    @Environment(\.colorScheme) var systemColorScheme
     
-    // Computed properties for dynamic colors
+    // dynamic colors
+    var effectiveDarkMode: Bool {
+        // If isDarkMode is nil, follow system setting; otherwise use the manual override
+        isDarkMode ?? (systemColorScheme == .dark)
+    }
+    
     var backgroundColor: Color {
-        isDarkMode ? (Color(hex: hexColor) ?? Color.green) : Color.white
+        effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : Color.white
     }
     
     var textColor: Color {
-        isDarkMode ? .white : .black
+        effectiveDarkMode ? .white : .black
     }
     
     var boxColor: Color {
-        isDarkMode ? (Color(hex: hexColor) ?? Color.green) : .white
+        effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : .white
     }
 
     var body: some View {
@@ -119,22 +125,21 @@ struct ContentView: View {
 
                                     VStack {
                                         HStack(alignment: .top, spacing: 10) {
-                                            Image("Plant10")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: 25)
-                                                .padding(.top, 5)
+                                            Text("+")
+                                                .font(.dmMonoRegular(size: 24))
+                                                .foregroundColor(textColor)
+                                                .padding(.top, 3)
                                                 
                                             
-                                            Text("Scan plants")
+                                            Text("Scan plants.")
                                                 .font(.dmSansExtraBold(size: 18))
                                                 .foregroundColor(textColor)
-                                                .padding(.top, 8)
+                                                .padding(.top, 6)
                                             
                                             
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal, 30)
+                                        .padding(.horizontal, 20)
 
 
                                         Text("Scan or upload plants from your camera roll for plant detetection, health infomation and plant care.")
@@ -158,14 +163,15 @@ struct ContentView: View {
                                             Text("+")
                                                 .font(.dmMonoRegular(size: 24))
                                                 .foregroundColor(textColor)
+                                                .padding(.top, 3)
 
-                                            Text("Plant Collection")
+                                            Text("Plant Collection.")
                                                 .font(.dmSansExtraBold(size: 18))
                                                 .foregroundColor(textColor)
-                                                .padding(.top, 3)
+                                                .padding(.top, 6)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal, 17)
+                                        .padding(.horizontal, 20)
                                         Text("Build and expand your plant collection in your plant garden. ")
                                             .font(.dmMonoRegular(size: 15))
                                             .foregroundColor(textColor)
@@ -183,11 +189,11 @@ struct ContentView: View {
                                     VStack {
                                         HStack(alignment: .top, spacing: 10) {
                                             Text("+")
-                                                .font(.dmSansRegular(size: 25))
+                                                .font(.dmSansRegular(size: 24))
                                                 .foregroundColor(textColor)
                                                 .padding(.top, 3)
 
-                                            Text("Plant Of the Day")
+                                            Text("Plant Of the Day.")
                                                 .font(.dmSansExtraBold(size: 18))
                                                 .foregroundColor(textColor)
                                                 .padding(.top, 8)
@@ -215,7 +221,7 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 Circle()
-                                                    .fill(isDarkMode ? Color.white.opacity(0.2) : Color.black.opacity(0.1))
+                                                    .fill(effectiveDarkMode ? Color.white.opacity(0.2) : Color.black.opacity(0.1))
                                                     .frame(width: 40, height: 40)
                                                 Image(systemName: "chevron.left")
                                                     .font(.system(size: 14, weight: .semibold))
@@ -230,12 +236,12 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 16)
-                                                    .fill(isDarkMode ? Color.white.opacity(0.7) : Color.black.opacity(0.1))
+                                                    .fill(effectiveDarkMode ? Color.white.opacity(0.7) : Color.black.opacity(0.1))
                                                     .frame(width: 90, height: 35)
                                                 
                                                 Text("+")
                                                     .font(.dmMonoRegular(size: 24))
-                                                    .foregroundColor(isDarkMode ? .black : textColor)
+                                                    .foregroundColor(effectiveDarkMode ? .black : textColor)
                                                     
                                             }
                                         }
@@ -246,7 +252,7 @@ struct ContentView: View {
                                         }) {
                                             ZStack {
                                                 Circle()
-                                                    .fill(isDarkMode ? Color.white.opacity(0.1) : Color.black.opacity(0.1))
+                                                    .fill(effectiveDarkMode ? Color.white.opacity(0.1) : Color.black.opacity(0.1))
                                                     .frame(width: 40, height: 40)
                                                 Image(systemName: "chevron.right")
                                                     .font(.system(size: 14, weight: .semibold))
@@ -268,30 +274,31 @@ struct ContentView: View {
                                 .padding(.top, 24)
                             }
                             
-                            // Header overlay - always on top
+                            // Header overlay
                             VStack {
                                 HStack(alignment: .center, spacing: 15) {
-                                    Image("newLogo")
+                                    Image(effectiveDarkMode ? "Darkmode" : "Lightmode")
                                         .resizable()
-                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fit)
                                         .frame(height: 30)
                                         .foregroundColor(textColor)
 
-                                    Image("Floranest")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 19)
-                                        .foregroundColor(textColor)
 
                                     Spacer()
                                     
                                     Button(action: {
-                                        print("Button tapped! isDarkMode: \(isDarkMode)")
+                                        print("Toggle tapped! Current isDarkMode: \(String(describing: isDarkMode)), System: \(systemColorScheme)")
                                         withAnimation {
-                                            isDarkMode.toggle()
+                                            if isDarkMode == nil {
+                                                // Currently auto, switch to opposite of current system mode
+                                                isDarkMode = !effectiveDarkMode
+                                            } else {
+                                                // Currently manual override, toggle it
+                                                isDarkMode?.toggle()
+                                            }
                                         }
                                     }) {
-                                        Image(systemName: isDarkMode ? "sun.max.fill" : "moon.fill")
+                                        Image(systemName: effectiveDarkMode ? "moon.fill" : "sun.max.fill")
                                             .foregroundColor(textColor)
                                             .font(.system(size: 24))
                                             .frame(width: 44, height: 44)
