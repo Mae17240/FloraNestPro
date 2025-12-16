@@ -51,7 +51,7 @@ extension Font {
 
 struct ContentView: View {
     @State private var hexColor: String = "#0A1D12"
-    @State private var isLoading: Bool = true
+    // @State private var isLoading: Bool = true
     @State private var showYourPlants = false
 
     var body: some View {
@@ -59,18 +59,18 @@ struct ContentView: View {
             ZStack {
                 (Color(hex: hexColor) ?? Color.green)
                     .ignoresSafeArea()
-                Group {
-                    if isLoading {
-                        VStack {
-                            Spacer()
-                            Image("LoadingImage")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 700, height: 800)
-                        }
-                        .transition(.opacity)
-                        .opacity(isLoading ? 1 : 0)
-                    } else {
+                // Group {
+                //     if isLoading {
+                //         VStack {
+                //             Spacer()
+                //             Image("LoadingImage")
+                //                 .resizable()
+                //                 .scaledToFit()
+                //                 .frame(width: 700, height: 800)
+                //         }
+                //         .transition(.opacity)
+                //         .opacity(isLoading ? 1 : 0)
+                //     } else {
                         ZStack {
                             VStack(spacing: 0) {
 
@@ -92,7 +92,7 @@ struct ContentView: View {
                                         Spacer()
                                         Text("Welcome Back")
                                             .foregroundColor(.white)
-                                            .font(.dmMonoRegular(size: 15))
+                                            .font(.dmSansMedium(size: 15))
                                     }
                                     .padding(.top, 10)
                                     .padding(.bottom, 10)
@@ -276,25 +276,26 @@ struct ContentView: View {
                                 .padding(.top, 24)
                             }
                         }
-                        .transition(.opacity)
-                        .opacity(isLoading ? 0 : 1)
-                    }
-                }
-                .animation(.easeInOut(duration: 0.6), value: isLoading)
+                        // .transition(.opacity)
+                        // .opacity(isLoading ? 0 : 1)
+                    // }
+                // }
+                // .animation(.easeInOut(duration: 0.6), value: isLoading)
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    withAnimation {
-                        isLoading = false
-                    }
-                }
+            // .onAppear {
+            //     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            //         withAnimation {
+            //             isLoading = false
+            //         }
+            //     }
+            // }
             }
             .navigationDestination(isPresented: $showYourPlants) {
                 YourPlants()
             }
         }
     }
-}
+
 
 #Preview {
     ContentView()

@@ -3,6 +3,7 @@ import Combine
 
 struct YourPlants: View {
     @State private var hexColor: String = "#0A1D12"
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -177,49 +178,53 @@ struct YourPlants: View {
                         // Footer with 3 buttons
                         HStack(spacing: 20) {
                             Button(action: {
-                                // Button 1 action
+                                dismiss()
                             }) {
-                                VStack {
-                                    Text("")
-                                        .font(.dmMonoRegular(size: 24))
-                                        .foregroundColor(Color.black)
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.white.opacity(0.2))
+                                        .frame(width: 40, height: 40)
+                                    Image(systemName: "chevron.left")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundColor(.white)
                                 }
-                                .foregroundColor(Color(hex: hexColor) ?? Color.green)
-                                .frame(maxWidth: .infinity)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 8)
                             }
                             
                             Button(action: {
-                                // Button 2 action
+                                dismiss()
                             }) {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(Color.clear)
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color.white.opacity(0.7))
                                         .frame(width: 90, height: 35)
                                     
-                                    Text("Home")
-                                        .font(.dmMonoRegular(size: 20))
-                                        .foregroundColor(.white)
-                                    
+                                    Text("H")
+                                        .font(.dmSansMedium(size: 16))
+                                        .foregroundColor(Color(hex: hexColor) ?? Color.green)
                                 }
                             }
                             .frame(maxWidth: .infinity)
                             
                             Button(action: {
-                                // Button 3 action
+                                
                             }) {
-                                VStack {
-                                    Text(">")
-                                        .font(.dmMonoRegular(size: 24))
-                                        .foregroundColor(Color.white)
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.white.opacity(0.1))
+                                        .frame(width: 40, height: 40)
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundColor(.white)
                                 }
-                                .foregroundColor(Color(hex: hexColor) ?? Color.white)
-                                .frame(maxWidth: .infinity)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.trailing, 8)
                             }
                         }
                         .padding(.horizontal, 40)
                         .padding(.vertical, 20)
                         .background(Color.clear)
-                        .cornerRadius(20, corners: [.topRight, .topLeft])
                     }
                     .background(Color(hex: hexColor) ?? Color.green)
                     .cornerRadius(50, corners: [.bottomLeft, .bottomRight, .topRight, .topLeft])
