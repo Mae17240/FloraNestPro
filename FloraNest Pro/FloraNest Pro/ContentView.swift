@@ -51,14 +51,13 @@ extension Font {
 
 struct ContentView: View {
     @State private var hexColor: String = "#182212"
-    // @State private var isLoading: Bool = true
-    @State private var showYourPlants = false
-    @State private var isDarkMode: Bool? = nil // nil = auto (follow system), true = dark, false = light
+    @State private var showYourPlants: Bool = false
+    @State private var isDarkMode: Bool? = nil
     @Environment(\.colorScheme) var systemColorScheme
     
     // dynamic colors
     var effectiveDarkMode: Bool {
-        // If isDarkMode is nil, follow system setting; otherwise use the manual override
+        // If isDarkMode is nil, follow system setting
         isDarkMode ?? (systemColorScheme == .dark)
     }
     
@@ -217,6 +216,7 @@ struct ContentView: View {
                                     // Footer with 3 buttons
                                     HStack(spacing: 20) {
                                         Button(action: {
+                                            print("Left footer button tapped — showing YourPlants sheet")
                                             showYourPlants = true
                                         }) {
                                             ZStack {
@@ -274,8 +274,8 @@ struct ContentView: View {
                                 .padding(.top, 24)
                             }
                             
-                            // Header overlay
-                            VStack {
+                            // Header overlay (top-only, doesn't block touches below)
+                            .overlay(
                                 HStack(alignment: .center, spacing: 15) {
                                     Image(effectiveDarkMode ? "Darkmode" : "Lightmode")
                                         .resizable()
@@ -285,7 +285,7 @@ struct ContentView: View {
 
 
                                     Spacer()
-                                    
+
                                     Button(action: {
                                         print("Toggle tapped! Current isDarkMode: \(String(describing: isDarkMode)), System: \(systemColorScheme)")
                                         withAnimation {
@@ -310,10 +310,8 @@ struct ContentView: View {
                                 .padding(.bottom, 10)
                                 .padding(.horizontal, 24)
                                 .background(Color.clear)
-                                
-                                Spacer()
-                            }
-                            .zIndex(1000)
+                                , alignment: .top
+                            )
                         }
                         // .transition(.opacity)
                         // .opacity(isLoading ? 0 : 1)
@@ -329,28 +327,29 @@ struct ContentView: View {
             //     }
             // }
             }
-            .navigationDestination(isPresented: $showYourPlants) {
+            // present YourPlants as a sheet
+            .sheet(isPresented: $showYourPlants) {
                 YourPlants()
             }
-        }
-    }
+         }
+     }
 
 
-#Preview {
-    ContentView()
-}
+ #Preview {
+     ContentView()
+ }
 
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
-    }
-}
-
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
+ extension View {
+     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+         clipShape( RoundedCorner(radius: radius, corners: corners) )
+     }
+ }
+ 
+ struct RoundedCorner: Shape {
+     var radius: CGFloat = .infinity
+     var corners: UIRectCorner = .allCorners
+     func path(in rect: CGRect) -> Path {
+         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+         return Path(path.cgPath)
+     }
+ }
