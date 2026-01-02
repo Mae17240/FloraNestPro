@@ -16,7 +16,7 @@ struct YourPlants: View {
     }
     @State private var careHistory: [CareItem] = []
     
-    // helper to add a test item
+    //
     private func addTestItem() {
         let new = CareItem(title: "Watered a plant", date: Date(), checked: true)
         withAnimation(.easeIn) {
@@ -24,9 +24,8 @@ struct YourPlants: View {
         }
     }
     
-    // Computed properties for dynamic colors
+    //
     var effectiveDarkMode: Bool {
-        // If isDarkMode is nil, follow system setting; otherwise use the manual override
         isDarkMode ?? (systemColorScheme == .dark)
     }
     
@@ -44,7 +43,6 @@ struct YourPlants: View {
     
     var body: some View {
         ZStack {
-            // debug: confirm view appears
             Color.clear.onAppear { print("YourPlants appeared") }
             backgroundColor
                 .ignoresSafeArea()
@@ -54,7 +52,7 @@ struct YourPlants: View {
                     VStack(spacing: 10) {
                         
                         ZStack {
-                            Image("Background12")
+                            Image("YourPlantsBkg")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
@@ -87,7 +85,7 @@ struct YourPlants: View {
                                 
                                 Text("Plants.")
                                     .foregroundColor(textColor)
-                                    .font(.dmMonoLight(size: 20))
+                                    .font(.dmSansExtraBold(size: 20))
                                     .padding(.top, 2)
                                 
                                 
@@ -104,151 +102,163 @@ struct YourPlants: View {
                         .padding(.vertical, 10)
 
                         
-                        // NEW: Summary card below Ruby's Plants and above Care Tracker
-                        VStack {
-                            HStack(spacing: 12) {
-                                Image("Plant_Triangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 35) // triangle plant size!!!
-                                    .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Plant Collection")
-                                        .font(.dmMonoRegular(size: 16))
-                                        .foregroundColor(textColor)
-                                    Text("You have 5 plants")
-                                        .font(.dmSansRegular(size: 13))
-                                        .foregroundColor(textColor.opacity(0.9))
+                        // --- Start: summary + reminders on the left, checklist on the right ---
+                        HStack(alignment: .top, spacing: 8) {
+                            // Left column: summary + reminders stacked
+                            VStack(spacing: 8) {
+                                // Summary card
+                                VStack {
+                                    HStack(spacing: 12) {
+                                        Image("SunPlantDark")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 35)
+                                            .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Collection")
+                                                .font(.dmSansExtraBold(size: 16))
+                                                .foregroundColor(textColor)
+                                            Text("You have 5 plants")
+                                                .font(.dmSansMedium(size: 13))
+                                                .foregroundColor(textColor.opacity(0.9))
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 5)
                                 }
-                                Spacer()
+                                .frame(height: 64)
+                                .background(
+                                    ZStack {
+                                        if effectiveDarkMode {
+                                            RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0))
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0))
+                                        }
+                                    }
+                                )
+                                
+                                // Reminders card
+                                VStack {
+                                    HStack(spacing: 12) {
+                                        Image(effectiveDarkMode ? "PlantCircleWhite" : "plantCircle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 35)
+                                            // keep foregroundColor for template assets; full-color PNGs will ignore tint
+                                            .foregroundColor(effectiveDarkMode ? Color.white : textColor)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Reminders")
+                                                .font(.dmSansExtraBold(size: 16))
+                                                .foregroundColor(textColor)
+                                            Text("Watering in 2 days")
+                                                .font(.dmSansRegular(size: 13))
+                                                .foregroundColor(textColor.opacity(0.9))
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 5)
+                                }
+                                .frame(height: 70)
+                                .background(
+                                    ZStack {
+                                        if effectiveDarkMode {
+                                            RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0))
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0))
+                                        }
+                                    }
+                                )
                             }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 5)
+                            .frame(maxWidth: .infinity)
+                            .padding(.leading, 12)
+                            .padding(.trailing, 3)
+                            
+                            
+                            VStack(spacing: 8) {
+                                HStack {
+                                   
+                                    Spacer()
+                                    
+                                }
+                                .padding(.horizontal, 12)
+                                
+                                ScrollView(.vertical, showsIndicators: false) {
+                                    VStack(spacing: 8) {
+                                        ForEach(careHistory) { item in
+                                            HStack(alignment: .top, spacing: 12) {
+
+                                                let isDark = effectiveDarkMode
+                                                let checkedBg = isDark ? Color.white.opacity(0.18) : (Color(hex: hexColor) ?? Color.green).opacity(0.12)
+                                                let checkedFg = isDark ? Color.white : (Color(hex: hexColor) ?? Color.green)
+                                                let uncheckedStroke = isDark ? Color.white.opacity(0.18) : Color.black.opacity(0.06)
+                                                let uncheckedFg = isDark ? Color.white.opacity(0.9) : textColor.opacity(0.6)
+                                                
+                                                ZStack {
+                                                    if item.checked {
+                                                        Circle()
+                                                            .fill(checkedBg)
+                                                            .frame(width: 25, height: 25)
+                                                        Image(systemName: "checkmark")
+                                                            .font(.system(size: 14, weight: .semibold))
+                                                            .foregroundColor(checkedFg)
+                                                    } else {
+                                                        Circle()
+                                                            .stroke(uncheckedStroke, lineWidth: 1)
+                                                            .frame(width: 10, height: 10)
+                                                        Image(systemName: "circle")
+                                                            .font(.system(size: 18, weight: .semibold))
+                                                            .foregroundColor(uncheckedFg)
+                                                    }
+                                                }
+                                                
+                                                VStack(alignment: .leading, spacing: 4) {
+                                                    Text(item.title)
+                                                        .font(.dmSansRegular(size: 14))
+                                                        .foregroundColor(textColor)
+                                                    Text(item.date, style: .time)
+                                                        .font(.dmMonoLight(size: 12))
+                                                        .foregroundColor(textColor.opacity(0.6))
+                                                }
+                                                Spacer()
+                                            }
+                                            .padding(.vertical, 6)
+                                            .padding(.horizontal, 8)
+                                        }
+                                    }
+                                    .padding(.vertical, 4)
+                                }
+                                .frame(height: 140) // height
+                            }
+                            .frame(width: 175) // slightly wider but shifted left by reducing left padding
+                            .padding(.trailing, 6)
                         }
-                        .frame(height: 64)
-                        .background(
-                            ZStack {
-                                if effectiveDarkMode {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0))
-                                } else {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0))
-                                }
-                            }
-                        )
-                        .padding(.leading, 14)
-                        .padding(.trailing, 30)
                         .padding(.top, 2)
                         
-                        // NEW: Plant Reminders card (same visual style as summary)
-                        VStack {
-                            HStack(spacing: 12) {
-                                Image("Plant_Triangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 35) // triangle plant size!!!
-                                    .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Plant Reminders")
-                                        .font(.dmMonoRegular(size: 16))
-                                        .foregroundColor(textColor)
-                                    Text("Next watering in 2 days")
-                                        .font(.dmSansRegular(size: 13))
-                                        .foregroundColor(textColor.opacity(0.9))
-                                }
-                                Spacer()
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 5)
-                        }
-                        .frame(height: 64)
-                        .background(
-                            ZStack {
-                                if effectiveDarkMode {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0))
-                                } else {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0))
-                                }
-                            }
-                        )
-                        .padding(.leading, 14)
-                        .padding(.trailing, 30)
-                        .padding(.top, 2)
+
                         
-                        // Divider between summary and care tracker
+
                         Rectangle()
                             .fill(effectiveDarkMode ? Color.white.opacity(0.06) : Color.black.opacity(0.5))
                             .frame(height: 0.8)
                             .padding(.leading, 16)
                             .padding(.trailing, 30)
-                            .padding(.top, 2)
+                            .padding(.top, 30)
                         
-                        // Care history card below Summary
-                        VStack(spacing: 8) {
-                            HStack {
-                                Text("Plant")
-                                    .foregroundColor(textColor)
-                                    .font(.dmSansBold(size: 25))
-                                
-                                Text("Care.")
-                                    .foregroundColor(textColor)
-                                    .font(.dmMonoLight(size: 20))
-                                    .padding(.top, 2)
-                                Spacer()
-                                Button(action: addTestItem) {
-                                    Text("Add Test")
-                                        .font(.dmSansRegular(size: 14))
-                                        .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
-                                        .padding(.vertical, 6)
-                                        .padding(.horizontal, 10)
-                                        .background(effectiveDarkMode ? Color.white.opacity(0.12) : Color.black.opacity(0.06))
-                                        .cornerRadius(8)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                            .padding(.horizontal, 14)
-                            
-                            ScrollView(.vertical, showsIndicators: false) {
-                                VStack(spacing: 8) {
-                                    ForEach(careHistory) { item in
-                                        HStack(alignment: .top, spacing: 12) {
-                                            Image(systemName: item.checked ? "checkmark.circle.fill" : "circle")
-                                                .font(.system(size: 18, weight: .semibold))
-                                                .foregroundColor(item.checked ? (Color(hex: hexColor) ?? Color.green) : textColor.opacity(0.6))
-                                            
-                                            VStack(alignment: .leading, spacing: 4) {
-                                                Text(item.title)
-                                                    .font(.dmSansRegular(size: 14))
-                                                    .foregroundColor(textColor)
-                                                Text(item.date, style: .time)
-                                                    .font(.dmMonoLight(size: 12))
-                                                    .foregroundColor(textColor.opacity(0.6))
-                                            }
-                                            Spacer()
-                                        }
-                                        .padding(.vertical, 6)
-                                        .padding(.horizontal, 8)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
+
+                        Button(action: addTestItem) {
+                            Text("Add Test")
+                                .font(.dmSansRegular(size: 14))
+                                .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 18)
+                                .background(effectiveDarkMode ? Color.white.opacity(0.12) : Color.black.opacity(0.06))
+                                .cornerRadius(10)
                         }
-                        .padding(.vertical, 10)
-                        .frame(height: 200)
-                        .background(
-                            ZStack {
-                                if effectiveDarkMode {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0))
-                                } else {
-                                    RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0))
-                                }
-                            }
-                        )
-                         .padding(.leading, 16) // reduce left padding to bring card closer to left edge
-                         .padding(.trailing, 30)
-                         .padding(.top, 2)
-                        
-                        // Section 2
-                       
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 6)
                         
                         Spacer()
                         
