@@ -2,7 +2,7 @@
 
 > **Status:** Undergoing Development
 > **Platform:** iOS
-> **Language:** Swift
+> **Language:** Swift, Xcode 
 
 FloraNest Pro is a minimalistic iOS plant scanning application designed to support everyday plant care. Users can scan or upload images of indoor and outdoor plants to receive identification data, health insights, and personalised care plans.
 
@@ -10,16 +10,16 @@ The design philosophy prioritises usability and simplicity, reducing distraction
 
 ---
 
-## ✨ Features
+## Features
 
-* 📷 Scan plants in real time or upload images from the camera roll
-* 🌿 Instant plant identification with detailed information
-* 🦠 Detection of common plant diseases with recommended treatments
-* 🪴 Personalised plant care recommendations for long-term maintenance
+* Scan plants in real time or upload images from the camera roll
+* Instant plant identification with detailed information
+* Detection of common plant diseases with recommended treatments
+* Personalised plant care recommendations for long-term maintenance
 
 ---
 
-## 🛠️ Development
+## Development
 
 * Built using **Xcode**
 * Written in **Swift**
@@ -27,13 +27,13 @@ The design philosophy prioritises usability and simplicity, reducing distraction
 
 ---
 
-## 🚧 Project Status
+## Project Status
 
-FloraNest Pro is currently under active development. Features and functionality are subject to change.
+FloraNest Pro is currently under active development. 
 
 ---
 
-## 📌 Future Enhancements (Planned)
+## Future Enhancements 
 
 * Expanded plant database
 * Improved disease detection accuracy
