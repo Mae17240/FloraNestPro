@@ -102,18 +102,18 @@ struct YourPlants: View {
                         .padding(.vertical, 10)
 
                         
-                        // --- Start: summary + reminders on the left, checklist on the right ---
+                        // summary + reminders on the left, checklist on the right
                         HStack(alignment: .top, spacing: 8) {
-                            // Left column: summary + reminders stacked
+                           
                             VStack(spacing: 8) {
-                                // Summary card
                                 VStack {
                                     HStack(spacing: 12) {
-                                        Image("SunPlantDark")
+                                        Image(effectiveDarkMode ? "SunPlantLight" : "SunPlantDark")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(height: 35)
                                             .foregroundColor(effectiveDarkMode ? (Color(hex: hexColor) ?? Color.green) : textColor)
+                                            .animation(.easeInOut(duration: 0.3), value: effectiveDarkMode)
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text("Collection")
                                                 .font(.dmSansExtraBold(size: 16))
@@ -145,7 +145,6 @@ struct YourPlants: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(height: 35)
-                                            // keep foregroundColor for template assets; full-color PNGs will ignore tint
                                             .foregroundColor(effectiveDarkMode ? Color.white : textColor)
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text("Reminders")
@@ -231,7 +230,7 @@ struct YourPlants: View {
                                 }
                                 .frame(height: 140) // height
                             }
-                            .frame(width: 175) // slightly wider but shifted left by reducing left padding
+                            .frame(width: 175) //shift left
                             .padding(.trailing, 6)
                         }
                         .padding(.top, 2)
@@ -239,7 +238,7 @@ struct YourPlants: View {
 
                         
 
-                        Rectangle()
+                        Rectangle() // divider
                             .fill(effectiveDarkMode ? Color.white.opacity(0.06) : Color.black.opacity(0.5))
                             .frame(height: 0.8)
                             .padding(.leading, 16)
